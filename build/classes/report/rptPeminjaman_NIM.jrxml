@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="07cfc270-6ec8-4254-9ad6-af7e883c8845">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tanggalmulai" class="java.util.Date">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tanggalselesai" class="java.util.Date">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_anggota.`id_anggota` AS tb_anggota_id_anggota,
+     tb_anggota.`nama_anggota` AS tb_anggota_nama_anggota,
+     tb_anggota.`alamat` AS tb_anggota_alamat,
+     tb_anggota.`telepon` AS tb_anggota_telepon,
+     tb_buku.`kode_buku` AS tb_buku_kode_buku,
+     tb_buku.`judul_buku` AS tb_buku_judul_buku,
+     tb_buku.`penulis_buku` AS tb_buku_penulis_buku,
+     tb_buku.`penerbit_buku` AS tb_buku_penerbit_buku,
+     tb_masterpinjam.`no_transaksi_p` AS tb_masterpinjam_no_transaksi_p,
+     tb_masterpinjam.`tanggal_pinjam` AS tb_masterpinjam_tanggal_pinjam,
+     tb_masterpinjam.`id_anggota` AS tb_masterpinjam_id_anggota,
+     tb_masterpinjam.`no_akhir_p` AS tb_masterpinjam_no_akhir_p,
+     tb_detilpinjam.`no_detilpinjam` AS tb_detilpinjam_no_detilpinjam,
+     tb_detilpinjam.`no_transaksi_p` AS tb_detilpinjam_no_transaksi_p,
+     tb_detilpinjam.`kode_buku` AS tb_detilpinjam_kode_buku
+FROM
+     `tb_anggota` tb_anggota INNER JOIN `tb_masterpinjam` tb_masterpinjam ON tb_anggota.`id_anggota` = tb_masterpinjam.`id_anggota`
+     INNER JOIN `tb_detilpinjam` tb_detilpinjam ON tb_masterpinjam.`no_transaksi_p` = tb_detilpinjam.`no_transaksi_p`
+     INNER JOIN `tb_buku` tb_buku ON tb_detilpinjam.`kode_buku` = tb_buku.`kode_buku`
+WHERE
+     tb_masterpinjam.`tanggal_pinjam` BETWEEN '$P!{tanggalmulai}' AND '$P!{tanggalselesai}']]>
+	</queryString>
+	<field name="tb_anggota_id_anggota" class="java.lang.String"/>
+	<field name="tb_anggota_nama_anggota" class="java.lang.String"/>
+	<field name="tb_anggota_alamat" class="java.lang.String"/>
+	<field name="tb_anggota_telepon" class="java.lang.String"/>
+	<field name="tb_buku_kode_buku" class="java.lang.String"/>
+	<field name="tb_buku_judul_buku" class="java.lang.String"/>
+	<field name="tb_buku_penulis_buku" class="java.lang.String"/>
+	<field name="tb_buku_penerbit_buku" class="java.lang.String"/>
+	<field name="tb_masterpinjam_no_transaksi_p" class="java.lang.String"/>
+	<field name="tb_masterpinjam_tanggal_pinjam" class="java.sql.Date"/>
+	<field name="tb_masterpinjam_id_anggota" class="java.lang.String"/>
+	<field name="tb_masterpinjam_no_akhir_p" class="java.lang.Integer"/>
+	<field name="tb_detilpinjam_no_detilpinjam" class="java.lang.Integer"/>
+	<field name="tb_detilpinjam_no_transaksi_p" class="java.lang.String"/>
+	<field name="tb_detilpinjam_kode_buku" class="java.lang.String"/>
+	<group name="tb_masterpinjam_no_transaksi_p">
+		<groupExpression><![CDATA[$F{tb_masterpinjam_no_transaksi_p}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="100" height="32" forecolor="#666666" backcolor="#E6E6E6" uuid="bfc5edde-2e4d-4f64-b9de-5473ba72637f"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[No Peminjaman]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="100" y="0" width="455" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="3786e2ed-3c82-481e-9159-dec3b42c9727"/>
+					<textElement>
+						<font size="24" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tb_masterpinjam_no_transaksi_p}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="08038a4e-57ac-4036-aadd-97564eeacfd1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="09f4fec2-2cbf-40d3-8d75-6f3b33889c06"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="d5dc9158-078b-4823-8e82-8d618aa1aea8"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PEMINJAMAN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="305" y="43" width="270" height="20" forecolor="#FFFFFF" uuid="b8391c18-ec40-4e09-be7f-2b175b0eb58f"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[SISPUS (Sistem Informasi Perpustakaan)]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c223bf0c-c145-4ab9-be14-698d82ae92a4"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="f9ee48bc-3ce1-4097-9f34-1c4d26402506"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Pinjam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b130fd34-011d-4abf-bbd9-d2a5ff52b749"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Anggota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="4f08b1e2-7aae-4eaf-a901-1d831fcc6b09"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Judul Buku]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="13fa356e-9146-4dfd-9381-515ca7401d23"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="0" width="185" height="20" uuid="616aa7ab-9d29-4df3-8119-3df2f41c714d"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_masterpinjam_tanggal_pinjam}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="185" y="0" width="185" height="20" uuid="1236d128-e6da-46eb-bc86-2a5076235023"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_anggota_nama_anggota}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="370" y="0" width="185" height="20" uuid="35f8178b-75db-4ee9-a15c-810b22ac6147"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_buku_judul_buku}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="011274ad-cb38-4f51-b5d7-ebf3ccd1df2c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="0efe65d1-305d-4c0e-a589-b257704498c7"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="26d68916-0855-44f1-afa0-d6e501252d9e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
